@@ -69,20 +69,32 @@ const shoes = [
 
 
 app.get('/shoes', (req, res) => {
-     
-    let filterShoes = [...shoes]
+    console.log(req.query);
+    
+
+    //cam back to this after getting a better understanding of the filter method - thansk to Glenn
 
 
+    let filterShoes = shoes
     // const maxPrice = req.query.maxPrice //<<-- set query for the max price
     // const type = req.query.type //<<-- sets query for type
-    
-    if (req.query['min-price']){
-        const minPrice = req.query['min-price'] //<<-- sets query for min price
-        filterShoes = filterShoes.filter(shoe => shoe.price >= minPrice) //<<-- this should filter?
+    //   shoes.forEach((shoe) => {
+   
+    if (req.query.minPrice){
+        const minPrice = req.query.minPrice; //<<-- sets query for min price
+        filterShoes = filterShoes.filter(shoe => shoe.price >= minPrice); //<<-- this should filter?
     }
+    if (req.query.maxPrice){
+        const maxPrice = req.query.maxPrice; //<<-- sets query for min price
+        filterShoes = filterShoes.filter(shoe => shoe.price <= maxPrice); //<<-- this should filter?
+    }
+    if (req.query.shoeType){
+        const shoeType = req.query.shoeType;
+        filterShoes = filterShoes.filter(shoe => shoe.type === shoeType);
 
-
-    return res.send(`<ul><li>${filterShoes.name} ${filterShoes.type} ${filterShoes.price}</li></ul>`)
+    }
+    // })
+    return res.send(JSON.stringify(filterShoes)) // <<-- this is something i'mm need to read up on!
 });
 
 
